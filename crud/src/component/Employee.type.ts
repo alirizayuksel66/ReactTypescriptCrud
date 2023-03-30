@@ -8,9 +8,9 @@ export interface IEmployee {
 export const dummyEmployeeList: IEmployee[] = [
     {
         id: new Date().toJSON().toString(),
-        firstName: "Dummy",
-        lastName: "Dummy11",
-        email: "dummy1@gmail.com",
+        firstName: "Ali Rıza",
+        lastName: "Yüksel",
+        email: "aliriza@gmail.com",
     },
 ]
 

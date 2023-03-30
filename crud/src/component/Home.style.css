@@ -10,3 +10,8 @@
     margin-top: 15px;
     margin-right: 10%;
 }
+
+.add-employee-btn {
+    float: right;
+    margin-bottom: 5px;
+}
