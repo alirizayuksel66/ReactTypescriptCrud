@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AddEmployee from "./AddEmployee";
+import EditEmployee from "./EditEmployee";
 import { IEmployee, dummyEmployeeList, PageEnum } from "./Employee.type";
 import EmployeeList from "./EmployeeList";
 import "./Home.style.css";
@@ -9,6 +10,7 @@ const Home = () => {
     const [employeeList, setEmployeeList] = useState(dummyEmployeeList as IEmployee[]);
 
     const [shownPage, setShownPage] = useState(PageEnum.list)
+    const [dataToEdit, setDataToEdit] = useState({} as IEmployee)
 
     const onAddEmployeeClickHnd = () => {
         setShownPage(PageEnum.add);
@@ -29,6 +31,20 @@ const Home = () => {
         tempList.splice(indexToDelete, 1);
         setEmployeeList(tempList)
     }
+
+    const editEmployeeData = (data: IEmployee) => {
+        setShownPage(PageEnum.edit);
+        setDataToEdit(data)
+    }
+
+    const updateData = (data: IEmployee) => {
+        const filteredData = employeeList.filter(x => x.id === data.id)[0]
+        const indexOfRecord = employeeList.indexOf(filteredData)
+        const tempData = [...employeeList]
+        tempData[indexOfRecord] = data
+        setEmployeeList(tempData)
+    } 
+
     return <>
         <article className="article-header">
             <header>
@@ -40,11 +56,13 @@ const Home = () => {
             {shownPage === PageEnum.list && (
                 <>
                     <input type="button" value="Çalışan Ekle" onClick={onAddEmployeeClickHnd} className="add-employee-btn" />
-                    <EmployeeList list={employeeList} onDeleteClickHnd={deleteEmployee} />
+                    <EmployeeList list={employeeList} onDeleteClickHnd={deleteEmployee} onEdit={editEmployeeData} />
                 </>
             )}
 
             {shownPage === PageEnum.add && <AddEmployee onBackBtnClickHnd={showListPage} onSubmitClickHnd={addEmployee} />}
+
+            {shownPage === PageEnum.edit && <EditEmployee data={dataToEdit} onBackBtnClickHnd={showListPage} onUpdateClickHnd={updateData} />}
         </section>
     </>
 }
